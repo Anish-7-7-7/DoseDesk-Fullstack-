@@ -5,9 +5,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-
   const [state, setState] = useState('Sign Up')
-
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -17,31 +15,23 @@ const Login = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-
     if (state === 'Sign Up') {
-
       const { data } = await axios.post(backendUrl + '/api/user/register', { name, email, password })
-
       if (data.success) {
         localStorage.setItem('token', data.token)
         setToken(data.token)
       } else {
         toast.error(data.message)
       }
-
     } else {
-
       const { data } = await axios.post(backendUrl + '/api/user/login', { email, password })
-
       if (data.success) {
         localStorage.setItem('token', data.token)
         setToken(data.token)
       } else {
         toast.error(data.message)
       }
-
     }
-
   }
 
   useEffect(() => {
@@ -75,6 +65,7 @@ const Login = () => {
           ? <p>Already have an account? <span onClick={() => setState('Login')} className='text-primary underline cursor-pointer'>Login here</span></p>
           : <p>Create an new account? <span onClick={() => setState('Sign Up')} className='text-primary underline cursor-pointer'>Click here</span></p>
         }
+        <a href="https://dose-desk-fullstack.vercel.app" target="_blank" className="text-primary underline text-sm w-full text-center">Doctor / Admin Login</a>
       </div>
     </form>
   )
